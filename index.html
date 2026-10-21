@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baychimo</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #101216;
+            color: #e8eaf0;
+            font-family: "Segoe UI", sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 20px 28px;
+            border-bottom: 1px solid #292d36;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin: 6px 0 0;
+            color: #a0a6b5;
+            font-size: 14px;
+        }
+
+        main {
+            width: min(760px, 100%);
+            margin: 0 auto;
+            padding: 28px 20px;
+            flex: 1;
+        }
+
+        #messages {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .message {
+            padding: 16px;
+            border-radius: 12px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .assistant {
+            background: #1b1f27;
+            border: 1px solid #2b303b;
+        }
+
+        .user {
+            background: #29364b;
+            align-self: flex-end;
+            max-width: 90%;
+        }
+
+        .composer {
+            width: min(760px, 100%);
+            margin: 0 auto;
+            padding: 16px 20px 24px;
+            display: flex;
+            gap: 10px;
+        }
+
+        textarea {
+            flex: 1;
+            resize: vertical;
+            min-height: 52px;
+            max-height: 180px;
+            padding: 14px;
+            border: 1px solid #343a46;
+            border-radius: 10px;
+            background: #1b1f27;
+            color: #fff;
+            font: inherit;
+        }
+
+        button {
+            padding: 0 20px;
+            border: 0;
+            border-radius: 10px;
+            background: #a8c7fa;
+            color: #172238;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #c1d7ff;
+        }
+
+        footer {
+            padding: 0 20px 18px;
+            text-align: center;
+            color: #858b99;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Baychimo</h1>
+        <p>Um espaço para conversar, refletir e organizar os pensamentos.</p>
+    </header>
+
+    <main>
+        <div id="messages">
+            <div class="message assistant">
+                Olá! Sou o Baychimo. Este é um espaço para você conversar
+                e refletir sem pressa.
+
+                Ainda estamos construindo minhas funções. Por enquanto,
+                esta interface é apenas um protótipo.
+            </div>
+        </div>
+    </main>
+
+    <div class="composer">
+        <textarea
+            id="prompt"
+            placeholder="Escreva o que você gostaria de conversar..."
+            aria-label="Mensagem"
+        ></textarea>
+        <button id="send" type="button">Enviar</button>
+    </div>
+
+    <footer>
+        Protótipo em desenvolvimento · Não substitui acompanhamento profissional.
+    </footer>
+</body>
+</html>

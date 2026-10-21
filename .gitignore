@@ -1,0 +1,5 @@
+.env
+*.log
+memory/
+conversations/
+__pycache__/
