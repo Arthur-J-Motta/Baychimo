@@ -47,6 +47,23 @@ const HTML_FILE = path.join(__dirname, "index.html");
 const JS_FILE = path.join(__dirname, "app.js");
 
 /*
+A partir daqui começa a memória temporária do Baychimo.
+
+A ideia é guardar as mensagens da conversa numa lista, porque até agora
+o Gemma só recebia a última mensagem e precisava fingir que conhecia
+todo o contexto anterior. Spoiler: ele não conhecia porcaria nenhuma.
+
+Cada conversa vai ter as mensagens do usuário e as respostas do modelo.
+Por enquanto, essa memória fica só na RAM e desaparece quando o servidor
+é desligado. Também vamos limitar o histórico mais adiante pra não
+consumir memória demais nem ultrapassar o contexto que o modelo suporta.
+
+Ass: Arthur "Roger" Joaquim Motta
+*/
+
+const conversationHistory = [];
+
+/*
 Aqui começa o servidor HTTP propriamente dito.
 
 Toda vez que o navegador fizer uma requisição, esse callback vai verificar
@@ -237,23 +254,24 @@ const server = http.createServer(async (req, res) => {
                     model: MODEL,
 
                     messages: [
-                        {
-                            role: "system",
-                            content:
-                                "Você é Baychimo, um assistente acolhedor " +
-                                "que conversa em português brasileiro. " +
-                                "Ajude a pessoa a refletir e organizar " +
-                                "seus pensamentos sem julgar. Não afirme " +
-                                "ser psicólogo, não faça diagnósticos e " +
-                                "não substitua ajuda profissional."
-                        },
+    {
+        role: "system",
+        content:
+            "Você é Baychimo, um assistente acolhedor " +
+            "que conversa em português brasileiro. " +
+            "Ajude a pessoa a refletir e organizar " +
+            "seus pensamentos sem julgar. Não afirme " +
+            "ser psicólogo, não faça diagnósticos e " +
+            "não substitua ajuda profissional."
+    },
 
-                        {
-                            role: "user",
-                            content: data.message.trim()
-                        }
-                    ],
+    ...conversationHistory,
 
+    {
+        role: "user",
+        content: data.message.trim()
+    }
+],
                     stream: false
                 })
             });
@@ -275,6 +293,32 @@ const server = http.createServer(async (req, res) => {
                     result.error || "O Ollama retornou um erro."
                 );
             }
+/*
+Agora vamos guardar a conversa de verdade.
+
+Primeiro registramos a mensagem que acabou de chegar do usuário e
+depois a resposta que o Gemma acabou de produzir. Assim, na próxima
+requisição, o modelo poderá receber esse histórico como contexto.
+
+IMPORTANTE: só guardamos as mensagens depois de confirmar que o Ollama
+respondeu corretamente. Se der erro, não vamos registrar uma conversa
+como se tivesse funcionado. A memória ainda é temporária e compartilhada
+por quem usar esta instância local do servidor, então não é uma memória
+separada por pessoa.
+
+Ass: Arthur "Roger" Joaquim Motta
+*/
+
+conversationHistory.push(
+    {
+        role: "user",
+        content: data.message.trim()
+    },
+    {
+        role: "assistant",
+        content: result.message.content
+    }
+);
 
             /*
             Se chegamos até aqui, a resposta foi recebida.
