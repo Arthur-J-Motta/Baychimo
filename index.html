@@ -54,6 +54,10 @@
             gap: 24px;
             border-bottom: 1px solid var(--border);
             background: rgba(13, 13, 13, .92);
+            top: 0;
+            z-index: 999;
+             backdrop-filter: blur(10px);
+            position: sticky;
         }
 
         .brand {
@@ -323,14 +327,83 @@
             button {
                 padding: 0 15px;
             }
+            .assistant-avatar {
+                width: 34px;
+                height: 34px;
+                flex-basis: 34px;
+            }
+
+.assistant-message .message {
+    max-width: calc(100% - 42px);
+}
+
+.brand {
+    gap: 10px;
+}
+
+.header-status {
+    flex-shrink: 0;
+}
         }
+
+.assistant-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+    max-width: 100%;
+}
+
+.assistant-avatar {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-radius: 13px;
+    border: 1px solid rgba(155, 109, 204, .35);
+    background: #17131d;
+}
+
+.assistant-message .message {
+    min-width: 0;
+    max-width: calc(100% - 50px);
+}
+
+.assistant-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+    max-width: 100%;
+}
+
+.assistant-avatar {
+    display: block;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    object-fit: cover;
+    border-radius: 13px;
+    border: 1px solid rgba(155, 109, 204, .35);
+    background: #17131d;
+}
+
+.assistant-message .message {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: calc(100% - 50px);
+}
+
+
     </style>
 </head>
 
 <body>
     <header>
         <div class="brand">
-            <div class="brand-mark" aria-hidden="true">B</div>
+            <div class="brand-mark">
+                <img src="baychimo.png" alt="">
+            </div>
             <div>
                 <h1>Baychimo</h1>
                 <p>Um espaço para conversar, refletir e organizar os pensamentos.</p>
@@ -350,11 +423,23 @@
             <p>Um espaço para colocar os pensamentos em palavras, conversar sem pressa e encontrar formas de lidar com o que você está vivendo.</p>
         </section>
 
-        <div id="messages">
-            <div class="message assistant">Olá! Sou o Baychimo. Este é um espaço para você conversar e refletir sem pressa.
+        
+
+<div id="messages">
+    <div class="assistant-message">
+        <img
+            src="baychimo.png"
+            alt=""
+            class="assistant-avatar"
+        >
+
+        <div class="message assistant">Olá! Sou o Baychimo. Este é um espaço para você conversar e refletir sem pressa.
 
 Ainda estamos construindo minhas funções. Por enquanto, esta interface é apenas um protótipo.</div>
-        </div>
+    </div>
+</div>
+
+
     </main>
 
     <div class="composer">
