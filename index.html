@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -34,10 +35,10 @@
         }
 
         body {
-            margin: 0;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
             background:
                 radial-gradient(ellipse at top, rgba(108, 63, 160, .12), transparent 55%),
                 var(--bg);
@@ -46,18 +47,18 @@
         }
 
         header {
-            width: 100%;
-            padding: 20px clamp(20px, 5vw, 64px);
+            position: sticky;
+            top: 0;
+            z-index: 999;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 24px;
+            width: 100%;
+            padding: 20px clamp(20px, 5vw, 64px);
             border-bottom: 1px solid var(--border);
             background: rgba(13, 13, 13, .92);
-            top: 0;
-            z-index: 999;
-             backdrop-filter: blur(10px);
-            position: sticky;
+            backdrop-filter: blur(10px);
         }
 
         .brand {
@@ -68,17 +69,21 @@
         }
 
         .brand-mark {
+            display: grid;
+            flex-shrink: 0;
+            place-items: center;
             width: 44px;
             height: 44px;
-            flex-shrink: 0;
-            display: grid;
-            place-items: center;
             border: 1px solid var(--border);
             border-radius: 14px;
             background: var(--section);
-            color: var(--primary2);
-            font-size: 22px;
-            font-weight: 700;
+        }
+
+        .brand-mark img {
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            object-fit: contain;
         }
 
         .brand h1 {
@@ -97,6 +102,7 @@
 
         .header-status {
             display: flex;
+            flex-shrink: 0;
             align-items: center;
             gap: 9px;
             padding: 9px 13px;
@@ -108,18 +114,18 @@
         }
 
         .status-dot {
+            flex-shrink: 0;
             width: 7px;
             height: 7px;
-            flex-shrink: 0;
             border-radius: 50%;
             background: var(--success);
         }
 
         main {
+            flex: 1;
             width: min(820px, 100%);
             margin: 0 auto;
             padding: 36px 20px 24px;
-            flex: 1;
         }
 
         .intro {
@@ -157,6 +163,25 @@
             gap: 16px;
         }
 
+        .assistant-message {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .assistant-avatar {
+            display: block;
+            flex: 0 0 40px;
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(155, 109, 204, .35);
+            border-radius: 13px;
+            background: var(--card);
+            object-fit: cover;
+        }
+
         .message {
             display: block;
             width: fit-content;
@@ -178,24 +203,30 @@
 
         .assistant {
             align-self: flex-start;
-            background: var(--card);
             border-top-left-radius: 5px;
+            background: var(--card);
         }
 
         .user {
             align-self: flex-end;
-            background: var(--section);
             border-color: rgba(155, 109, 204, .38);
             border-top-right-radius: 5px;
+            background: var(--section);
+        }
+
+        .assistant-message .message {
+            flex: 0 1 auto;
+            min-width: 0;
+            max-width: calc(100% - 50px);
         }
 
         .composer {
-            width: min(820px, 100%);
-            margin: 0 auto;
-            padding: 8px 20px 24px;
             display: flex;
             align-items: flex-end;
             gap: 12px;
+            width: min(820px, 100%);
+            margin: 0 auto;
+            padding: 8px 20px 24px;
         }
 
         textarea {
@@ -207,7 +238,7 @@
             max-height: 180px;
             margin: 0;
             padding: 15px 16px;
-            resize: vertical;
+            resize: none;
             border: 1px solid var(--border);
             border-radius: 14px;
             outline: none;
@@ -235,9 +266,9 @@
         }
 
         button {
+            flex-shrink: 0;
             min-height: 54px;
             padding: 0 22px;
-            flex-shrink: 0;
             border: 1px solid var(--primary);
             border-radius: 14px;
             background: var(--primary);
@@ -250,8 +281,8 @@
         }
 
         button:hover {
-            background: var(--primary2);
             border-color: var(--primary2);
+            background: var(--primary2);
         }
 
         button:active {
@@ -273,8 +304,8 @@
 
         @media (max-width: 560px) {
             header {
-                padding: 16px;
                 align-items: flex-start;
+                padding: 16px;
             }
 
             .brand {
@@ -315,9 +346,19 @@
                 padding: 14px 15px;
             }
 
+            .assistant-avatar {
+                flex-basis: 34px;
+                width: 34px;
+                height: 34px;
+            }
+
+            .assistant-message .message {
+                max-width: calc(100% - 42px);
+            }
+
             .composer {
-                padding: 8px 16px 20px;
                 gap: 8px;
+                padding: 8px 16px 20px;
             }
 
             textarea {
@@ -327,74 +368,7 @@
             button {
                 padding: 0 15px;
             }
-            .assistant-avatar {
-                width: 34px;
-                height: 34px;
-                flex-basis: 34px;
-            }
-
-.assistant-message .message {
-    max-width: calc(100% - 42px);
-}
-
-.brand {
-    gap: 10px;
-}
-
-.header-status {
-    flex-shrink: 0;
-}
         }
-
-.assistant-message {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    width: 100%;
-    max-width: 100%;
-}
-
-.assistant-avatar {
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-    object-fit: cover;
-    border-radius: 13px;
-    border: 1px solid rgba(155, 109, 204, .35);
-    background: #17131d;
-}
-
-.assistant-message .message {
-    min-width: 0;
-    max-width: calc(100% - 50px);
-}
-
-.assistant-message {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    width: 100%;
-    max-width: 100%;
-}
-
-.assistant-avatar {
-    display: block;
-    width: 40px;
-    height: 40px;
-    flex: 0 0 40px;
-    object-fit: cover;
-    border-radius: 13px;
-    border: 1px solid rgba(155, 109, 204, .35);
-    background: #17131d;
-}
-
-.assistant-message .message {
-    flex: 0 1 auto;
-    min-width: 0;
-    max-width: calc(100% - 50px);
-}
-
-
     </style>
 </head>
 
@@ -404,6 +378,7 @@
             <div class="brand-mark">
                 <img src="baychimo.png" alt="">
             </div>
+
             <div>
                 <h1>Baychimo</h1>
                 <p>Um espaço para conversar, refletir e organizar os pensamentos.</p>
@@ -423,23 +398,19 @@
             <p>Um espaço para colocar os pensamentos em palavras, conversar sem pressa e encontrar formas de lidar com o que você está vivendo.</p>
         </section>
 
-        
+        <div id="messages">
+            <div class="assistant-message">
+                <img
+                    src="baychimo.png"
+                    alt=""
+                    class="assistant-avatar"
+                >
 
-<div id="messages">
-    <div class="assistant-message">
-        <img
-            src="baychimo.png"
-            alt=""
-            class="assistant-avatar"
-        >
-
-        <div class="message assistant">Olá! Sou o Baychimo. Este é um espaço para você conversar e refletir sem pressa.
+                <div class="message assistant">Olá! Sou o Baychimo. Este é um espaço para você conversar e refletir sem pressa.
 
 Ainda estamos construindo minhas funções. Por enquanto, esta interface é apenas um protótipo.</div>
-    </div>
-</div>
-
-
+            </div>
+        </div>
     </main>
 
     <div class="composer">
@@ -448,6 +419,7 @@ Ainda estamos construindo minhas funções. Por enquanto, esta interface é apen
             placeholder="Escreva o que você gostaria de conversar..."
             aria-label="Mensagem"
         ></textarea>
+
         <button id="send" type="button">Enviar</button>
     </div>
 

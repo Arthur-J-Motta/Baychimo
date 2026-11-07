@@ -37,6 +37,7 @@ esse caminho também.
 */
 
 const assistantAvatar = "baychimo.png";
+let isProcessing = false;
 
 function addMessage(text, author) {
     const message = document.createElement("div");
@@ -96,11 +97,17 @@ merece ter que ficar procurando a resposta lá em cima igual antes.
 */
 
 async function sendMessage() {
+    if (isProcessing) {
+        return;
+    }
+
     const message = promptInput.value.trim();
 
     if (message === "") {
         return;
     }
+
+    isProcessing = true;
 
     /**
     Primeiro eu verifico se a pessoa realmente escreveu alguma coisa.
@@ -199,10 +206,11 @@ async function sendMessage() {
         */
 
     } finally {
-        sendButton.disabled = false;
-        sendButton.textContent = "Enviar";
-        promptInput.focus();
-    }
+    isProcessing = false;
+    sendButton.disabled = false;
+    sendButton.textContent = "Enviar";
+    promptInput.focus();
+}
 
     /**
     O finally roda tanto se deu certo quanto se deu errado.

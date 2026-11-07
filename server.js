@@ -47,6 +47,8 @@ const HTML_FILE = path.join(__dirname, "index.html");
 
 const JS_FILE = path.join(__dirname, "app.js");
 
+const AVATAR_FILE = path.join(__dirname, "baychimo.png");
+
 /*
 A partir daqui começa a memória temporária do Baychimo.
 A ideia é guardar as mensagens da conversa numa lista, porque até agora
@@ -180,6 +182,24 @@ const server = http.createServer(async (req, res) => {
     que o servidor entregue um arquivo. Cada rota tem sua função pra
     não transformar tudo numa bagunça impossível de manter depois.
     */
+
+if (req.method === "GET" && req.url === "/baychimo.png") {
+        try {
+            const avatar = fs.readFileSync(AVATAR_FILE);
+
+            res.writeHead(200, {
+                "Content-Type": "image/png"
+            });
+
+            return res.end(avatar);
+        } catch (error) {
+            res.writeHead(500, {
+                "Content-Type": "text/plain; charset=utf-8"
+            });
+
+            return res.end("Não foi possível abrir baychimo.png.");
+        }
+    }
 
     if (req.method === "POST" && req.url === "/api/chat") {
 
